@@ -1,22 +1,25 @@
 # Tududi MCP Server
 
-MCP (Model Context Protocol) server that connects Claude to your tududi task management system.
+Connect Claude to your tududi task manager.
 
-## Setup
+## Quick Start
 
-### 1. Generate an API Token in Tududi
+```bash
+# 1. Install
+npm install
 
-1. Open tududi in your browser
-2. Go to **Settings** > **API Tokens**
-3. Create a new token (give it a name like "Claude MCP")
-4. Copy the token
+# 2. Build
+npm run build
+```
 
-### 2. Configure Claude Code
+## Setup with Claude Desktop
 
-Add this to your Claude Code MCP settings file:
+1. Get an API token from tududi: **Settings** > **API Tokens** > Create new token
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Linux**: `~/.config/claude/claude_desktop_config.json`
+2. Add to your Claude config file:
+
+   - **Mac**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - **Linux**: `~/.config/claude/claude_desktop_config.json`
 
 ```json
 {
@@ -26,67 +29,34 @@ Add this to your Claude Code MCP settings file:
       "args": ["/path/to/tududi-mcp/dist/index.js"],
       "env": {
         "TUDUDI_URL": "http://localhost:3002",
-        "TUDUDI_API_TOKEN": "your-api-token-here"
+        "TUDUDI_API_TOKEN": "your-token-here"
       }
     }
   }
 }
 ```
 
-### 3. Restart Claude Code
+3. Restart Claude Desktop
 
-After saving the config, restart Claude Code for the MCP server to load.
+## What You Can Do
+
+Ask Claude things like:
+- "Show my tasks for today"
+- "Create a task called 'Review PR'"
+- "What's in my inbox?"
+- "Complete the documentation task"
 
 ## Available Tools
 
-| Tool | Description |
-|------|-------------|
-| `list_tasks` | List tasks with filters (today, upcoming, completed, etc.) |
-| `get_task` | Get a specific task by ID |
-| `create_task` | Create a new task |
-| `update_task` | Update task properties |
-| `complete_task` | Toggle task completion |
-| `delete_task` | Delete a task |
-| `add_subtask` | Add subtask to a task |
-| `get_task_metrics` | Get productivity statistics |
-| `list_projects` | List all projects |
-| `create_project` | Create a new project |
-| `update_project` | Update a project |
-| `list_inbox` | List inbox items |
-| `add_to_inbox` | Quick capture to inbox |
-| `list_areas` | List all areas |
-| `list_tags` | List all tags |
-| `search` | Search across tasks, projects, notes |
+**Tasks**: list_tasks, get_task, create_task, update_task, complete_task, delete_task, add_subtask, get_task_metrics
 
-## Example Usage
+**Projects**: list_projects, create_project, update_project
 
-Once configured, you can ask Claude things like:
-
-- "Show me my tasks for today"
-- "Create a task called 'Review PR' with high priority"
-- "What's in my inbox?"
-- "Add 'Call dentist' to my inbox"
-- "Complete the task about documentation"
-- "Show me tasks in my Work project"
-- "What are my productivity metrics?"
+**Other**: list_inbox, add_to_inbox, list_areas, list_tags, search
 
 ## Environment Variables
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `TUDUDI_URL` | `http://localhost:3002` | Your tududi server URL |
-| `TUDUDI_API_TOKEN` | (required) | API token from tududi settings |
-| `TUDUDI_API_VERSION` | `v1` | API version |
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Build
-npm run build
-
-# Run directly (for testing)
-TUDUDI_API_TOKEN=your-token node dist/index.js
-```
+| Variable | Default | Required |
+|----------|---------|----------|
+| `TUDUDI_API_TOKEN` | - | Yes |
+| `TUDUDI_URL` | `http://localhost:3002` | No |
