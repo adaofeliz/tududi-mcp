@@ -38,6 +38,33 @@ npm run build
 
 3. Restart Claude Desktop
 
+## MCPB (Model Context Protocol Bundle)
+
+You can bundle this server into a single `.mcpb` file for easier distribution and installation.
+
+### Build
+
+Run the following command to create the bundle:
+
+```bash
+npm run mcpb:build
+```
+
+This produces a `tududi.mcpb` file containing the server, its production dependencies, and the manifest.
+
+### Installation & Configuration
+
+When installing the `.mcpb` bundle, the client should configure the following environment variables via `user_config`:
+
+- `TUDUDI_API_TOKEN`: Your tududi API token.
+- `TUDUDI_URL`: The URL of your tududi instance (defaults to `http://localhost:3002`).
+
+### Caveats
+
+- **Target OS**: Build the bundle on the same operating system where it will be used, as some dependencies might be platform-specific.
+- **Production Dependencies**: The bundle only includes production dependencies.
+- **No Signing**: This bundle is not digitally signed.
+
 ## What You Can Do
 
 Ask Claude things like:

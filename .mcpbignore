@@ -1,0 +1,62 @@
+# Git and version control
+.git/
+.gitignore
+.gitattributes
+
+# Environment and secrets
+.env
+.env.*
+.env.local
+.env.*.local
+
+# Development and build artifacts
+dist/
+build/
+.mcpb-build/
+*.mcpb
+
+# Source code (not needed in bundle)
+src/
+tsconfig.json
+
+# Testing and development
+test/
+tests/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+jest.config.js
+vitest.config.ts
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Development dependencies and logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+.yarn/
+
+# Sisyphus and project management
+.sisyphus/
+
+# Documentation (optional - include if needed)
+# docs/
+# CONTRIBUTING.md
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.circleci/
+
+# Package manager lock files (optional - include if needed)
+# package-lock.json
+# yarn.lock

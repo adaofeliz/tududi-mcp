@@ -1,0 +1,40 @@
+name: Build MCPB Bundle
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build MCPB bundle
+        run: npm run mcpb:build
+      
+      - name: Set short SHA
+        id: sha
+        run: echo "shortsha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+      
+      - name: Rename bundle with SHA
+        run: mv tududi.mcpb tududi-${{ steps.sha.outputs.shortsha }}.mcpb
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tududi-mcpb-${{ steps.sha.outputs.shortsha }}
+          path: tududi-${{ steps.sha.outputs.shortsha }}.mcpb
+          retention-days: 30

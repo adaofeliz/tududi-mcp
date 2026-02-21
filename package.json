@@ -2,17 +2,26 @@
   "name": "tududi-mcp-server",
   "version": "1.0.0",
   "description": "MCP server for tududi",
+  "author": "adaofeliz",
+  "license": "MIT",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsc && node dist/index.js"
+    "dev": "tsc && node dist/index.js",
+    "mcpb:prep": "rm -rf .mcpb-build && mkdir -p .mcpb-build/extension",
+    "mcpb:stage": "cp -r dist .mcpb-build/extension/server && cp package.json .mcpb-build/extension/ && cp package-lock.json .mcpb-build/extension/ 2>/dev/null || true && cd .mcpb-build/extension && npm install --omit=dev && cd ../../ && cp README.md .mcpb-build/extension/ 2>/dev/null || true && cp LICENSE .mcpb-build/extension/",
+    "mcpb:manifest": "node scripts/generate-manifest.cjs",
+    "mcpb:pack": "npx mcpb validate .mcpb-build/extension && npx mcpb pack .mcpb-build/extension tududi.mcpb",
+    "mcpb:verify": "npx mcpb unpack tududi.mcpb .mcpb-verify && test -f .mcpb-verify/manifest.json && test -d .mcpb-verify/server && rm -rf .mcpb-verify",
+    "mcpb:build": "npm run build && npm run mcpb:prep && npm run mcpb:stage && npm run mcpb:manifest && npm run mcpb:pack && npm run mcpb:verify"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0"
   },
   "devDependencies": {
+    "@anthropic-ai/mcpb": "^2.1.2",
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0"
   }
