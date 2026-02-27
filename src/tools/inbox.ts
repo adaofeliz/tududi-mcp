@@ -45,4 +45,20 @@ export function registerInboxTools(server: McpServer) {
       };
     }
   );
+
+  server.registerTool(
+    "delete_from_inbox",
+    {
+      description: "Delete an inbox item by its UID (e.g. after it has been processed).",
+      inputSchema: {
+        uid: z.string().describe("Inbox item UID to delete"),
+      },
+    },
+    async ({ uid }) => {
+      const data = await tududiApi(`/inbox/${uid}`, { method: "DELETE" });
+      return {
+        content: [{ type: "text" as const, text: data != null ? JSON.stringify(data, null, 2) : "Inbox item deleted." }],
+      };
+    }
+  );
 }
